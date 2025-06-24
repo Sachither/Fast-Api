@@ -1,14 +1,13 @@
 from fastapi import FastAPI
 from app import models
 from app.database import engine
-from app.routers import auth, post, user, vote
+from app.routers import auth, migration, post, user, vote
 from app.config import settings
 from fastapi.middleware.cors import CORSMiddleware
 
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-print("Loaded SECRET_KEY:", settings.SECRET_KEY)
 origins = [
     # "http://localhost.tiangolo.com",
     # "https://localhost.tiangolo.com",
@@ -30,6 +29,7 @@ app.include_router(post.router)
 app.include_router(user.router)    
 app.include_router(auth.router)
 app.include_router(vote.router)
+app.include_router(migration.router)
 
 @app.get("/")
 def read_root():
